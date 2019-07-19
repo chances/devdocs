@@ -36,6 +36,7 @@ module Docs
       map { |file| File.basename(file, '.rb') }.
       map { |name| const_get(name.camelize) }.
       sort { |a, b| a.name.casecmp(b.name) }.
+      select { |klass| klass < Doc }.
       reject(&:abstract)
   end
 
