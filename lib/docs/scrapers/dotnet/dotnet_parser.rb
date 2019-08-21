@@ -109,14 +109,14 @@ module Docs
       parse_docs(xml.at_css('Type > Docs'), type)
 
       type[:name] = xml.root['Name'].sub('+', '.')
-      type[:path] = xml.root['FullName'].sub('+', '.').downcase
+      type[:path] = name_to_id(xml.root['FullName'].sub('+', '.').downcase, '-')
 
       type[:signatures] = {}
       xml.xpath("//TypeSignature[#{@framework_alternate_clause}]").each do |node|
         type[:signatures][node['Language']] = node['Value'] if node['Language'] != 'DocId'
       end
 
-      type_matches = type[:signatures]['C#'].scan(/([a-z]+) [^a-z]/)
+      type_matches = type[:signatures]['C#'].scan(/([a-z]+)(?: object\[\])? [^a-z]/)
       type[:type] = type_matches[0][0].titleize
       type[:type] = 'Delegate' if DELEGATE_TYPES.include?(type[:type])
 
@@ -136,15 +136,8 @@ module Docs
       type[:base] = base_node.text unless base_node.nil?
 
       unless type[:base].nil? or type[:base] == 'System.Object'
-        base_id = type[:base]
-
-        # Convert base type names like "System.Lazy<T>" into an id like "System.Lazy`1"
-        if base_id.include?('<')
-          type_param_count = base_id.scan(/([^<,]+(,|>))/).size
-          base_id = "#{base_id.split('<')[0]}`#{type_param_count}"
-        end
-
-        @data[base_id][:derived] << id
+        base_id = name_to_id(type[:base], '`')
+        @data[base_id][:derived] << id if @data.key?(base_id)
       end
 
       type[:interfaces] = xml.css('InterfaceName').to_a.map(&:text)
@@ -189,6 +182,16 @@ module Docs
 
       content = CGI.unescape(node.inner_html.strip)
       content != 'To be added.' ? content : nil
+    end
+
+    # Convert names like "System.Lazy<T>" into an id like "System.Lazy`1" (where '`' is configurable)
+    def name_to_id(name, separator)
+      if name.include?('<')
+        type_param_count = name.scan(/([^<,]+(,|>))/).size
+        name = "#{name.split('<')[0]}#{separator}#{type_param_count}"
+      end
+
+      name
     end
   end
 end

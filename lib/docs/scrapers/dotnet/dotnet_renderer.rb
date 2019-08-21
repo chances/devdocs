@@ -88,6 +88,8 @@ module Docs
 
     TYPE_PAGE_ERB = <<-HTML.strip_heredoc
       <h1><%= escape type[:name] %></h1>
+
+      <%= render_attribution type[:path] %>
     HTML
 
     TABLE_ERB = <<-HTML.strip_heredoc
@@ -108,10 +110,6 @@ module Docs
           <% end %>
         </tbody>
       </table>
-    HTML
-
-    PAGE_ERB = <<-HTML.strip_heredoc
-      Entry
     HTML
 
     ATTRIBUTION_ERB = <<-HTML.strip_heredoc

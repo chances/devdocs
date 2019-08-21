@@ -70,6 +70,8 @@ module Docs
         parser.parse_type(type_xml)
       end
 
+      pp parser.data['System.String']
+
       index_page = {
         path: 'index',
         store_path: 'index.html',
@@ -86,7 +88,7 @@ module Docs
           path: namespace[:path],
           store_path: namespace[:path] + '.html',
           output: renderer.render_namespace(namespace),
-          entries: [Entry.new(namespace[:name], namespace[:path], '# Namespaces')],
+          entries: [Entry.new(namespace[:name], namespace[:path], '1. Namespaces')],
         }
 
         yield namespace_page

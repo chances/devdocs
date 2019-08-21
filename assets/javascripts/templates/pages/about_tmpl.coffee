@@ -492,6 +492,11 @@ credits = [
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
+    '.NET',
+    '.NET Foundation and contributors',
+    'CC BY',
+    'https://raw.githubusercontent.com/dotnet/dotnet-api-docs/master/LICENSE'
+  ], [
     'nginx / Lua Module',
     '2009-2017 Xiaozhe Wang (chaoslawful)<br>&copy; 2009-2018 Yichun "agentzh" Zhang (章亦春), OpenResty Inc.',
     'BSD',
