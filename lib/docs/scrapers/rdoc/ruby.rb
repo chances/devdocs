@@ -69,6 +69,10 @@ module Docs
       Licensed under their own licenses.
     HTML
 
+    version '2.6' do
+      self.release = '2.6.3'
+    end
+
     version '2.5' do
       self.release = '2.5.3'
     end
@@ -83,6 +87,17 @@ module Docs
 
     version '2.2' do
       self.release = '2.2.10'
+    end
+
+    def get_latest_version(opts)
+      tags = get_github_tags('ruby', 'ruby', opts)
+      tags.each do |tag|
+        version = tag['name'].gsub(/_/, '.')[1..-1]
+
+        if !/^([0-9.]+)$/.match(version).nil? && version.count('.') == 2
+          return version
+        end
+      end
     end
   end
 end
