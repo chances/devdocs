@@ -2,7 +2,7 @@ module Docs
   class Typescript
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content
+        name = at_css('h1').content.strip
         name.sub! ' and ', ' & '
         name
       end
@@ -15,7 +15,7 @@ module Docs
         type
       end
 
-      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related']
+      SKIP_ENTRIES = ['Introduction', 'A note', 'A Note', ', and', 'Techniques', ' Concepts', 'Hello World', 'Working with', 'Our ', 'Implementing ', 'Difference between', 'Basic', 'sample', 'Questions', 'Example', 'Export as close', 'Red Flags', 'First steps', 'Pitfalls', 'Well-known', 'Starting out', 'Comparing ', 'Do not', 'Trade-off', ' vs', 'Overview', 'Related', 'Table of contents']
 
       def additional_entries
         return [] unless slug.start_with?('handbook')
@@ -24,6 +24,7 @@ module Docs
 
         css('.post-content h1, .post-content h2').each_with_object [] do |node, entries|
           next if node.next_element.try(:name) == 'h2'
+          node.css('.anchor-hash').remove
           name = node.content.strip
           next if name.length > 40
           next if name == self.name || SKIP_ENTRIES.any? { |str| name.include?(str) }

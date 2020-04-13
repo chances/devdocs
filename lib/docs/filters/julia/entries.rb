@@ -14,16 +14,23 @@ module Docs
       end
 
       def additional_entries
-        return [] unless slug.start_with?('stdlib')
+        return [] if slug.start_with?('manual')
 
-        css('.docstring-binding[id]').map do |node|
+        entries = []
+        used_names = {}
+
+        css('.docstring-binding[id]').each do |node|
           name = node.content
           name.gsub! '.:', '.'
           name.remove! 'Base.'
           category = node.parent.at_css('.docstring-category').content
           name << '()' if category == 'Function' || category == 'Method'
-          [name, node['id']]
+
+          entries << [name, node['id']] unless used_names.key?(name)
+          used_names[name] = true
         end
+
+        entries
       end
     end
   end

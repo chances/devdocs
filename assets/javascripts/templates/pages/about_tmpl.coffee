@@ -83,7 +83,7 @@ app.templates.aboutPage = -> """
 
 credits = [
   [ 'Angular<br>Angular.js',
-    '2010-2018 Google, Inc.',
+    '2010-2019 Google, Inc.',
     'CC BY',
     'https://creativecommons.org/licenses/by/4.0/'
   ], [
@@ -108,7 +108,7 @@ credits = [
     'https://raw.githubusercontent.com/babel/website/master/LICENSE'
   ], [
     'Backbone.js',
-    '2010-2016 Jeremy Ashkenas, DocumentCloud',
+    '2010-2019 Jeremy Ashkenas, DocumentCloud',
     'MIT',
     'https://raw.githubusercontent.com/jashkenas/backbone/master/LICENSE'
   ], [
@@ -123,7 +123,7 @@ credits = [
     'https://raw.githubusercontent.com/petkaantonov/bluebird/master/LICENSE'
   ], [
     'Bootstrap',
-    '2011-2019 Twitter, Inc.<br>2011-2019 The Bootstrap Authors',
+    '2011-2020 Twitter, Inc.<br>2011-2020 The Bootstrap Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -143,12 +143,12 @@ credits = [
     'http://en.cppreference.com/w/Cppreference:Copyright/CC-BY-SA'
   ], [
     'CakePHP',
-    '2005-2018 The Cake Software Foundation, Inc.',
+    '2005-present The Cake Software Foundation, Inc.',
     'MIT',
     'https://raw.githubusercontent.com/cakephp/cakephp/master/LICENSE'
   ], [
     'Chai',
-    '2016 Chai.js Assertion Library',
+    '2017 Chai.js Assertion Library',
     'MIT',
     'https://raw.githubusercontent.com/chaijs/chai/master/LICENSE'
   ], [
@@ -193,7 +193,7 @@ credits = [
     'https://raw.githubusercontent.com/composer/composer/master/LICENSE'
   ], [
     'Cordova',
-    '2012-2018 The Apache Software Foundation',
+    '2012, 2013, 2015 The Apache Software Foundation',
     'Apache',
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
@@ -203,7 +203,7 @@ credits = [
     'https://creativecommons.org/licenses/by-sa/2.5/'
   ], [
     'Crystal',
-    '2012-2017 Manas Technology Solutions',
+    '2012-2019 Manas Technology Solutions',
     'Apache',
     'https://raw.githubusercontent.com/crystal-lang/crystal/master/LICENSE'
   ], [
@@ -213,7 +213,7 @@ credits = [
     'https://raw.githubusercontent.com/cypress-io/cypress-documentation/develop/LICENSE.md'
   ], [
     'D',
-    '1999-2018 The D Language Foundation',
+    '1999-2019 The D Language Foundation',
     'Boost',
     'https://raw.githubusercontent.com/dlang/phobos/master/LICENSE_1_0.txt'
   ], [
@@ -267,6 +267,11 @@ credits = [
     'MIT',
     'https://raw.githubusercontent.com/emberjs/ember.js/master/LICENSE'
   ], [
+    'Enzyme',
+    '2015 Airbnb, Inc.',
+    'MIT',
+    'https://raw.githubusercontent.com/airbnb/enzyme/master/LICENSE.md'
+  ], [
     'Erlang',
     '2010-2017 Ericsson AB',
     'Apache',
@@ -298,9 +303,19 @@ credits = [
     'https://www.gnu.org/licenses/fdl-1.3.en.html'
   ], [
     'Git',
-    '2005-2018 Linus Torvalds and others',
-    'GPLv2',
-    'https://raw.githubusercontent.com/git/git/master/COPYING'
+    '2012-2018 Scott Chacon and others',
+    'MIT',
+    'https://raw.githubusercontent.com/git/git-scm.com/master/MIT-LICENSE.txt'
+  ], [
+    'GnuCOBOL',
+    'Free Software Foundation',
+    'GFDL',
+    'https://www.gnu.org/licenses/fdl-1.3.en.html'
+  ], [
+    'Gnuplot',
+    'Copyright 1986 - 1993, 1998, 2004 Thomas Williams, Colin Kelley',
+    'gnuplot license',
+    'https://sourceforge.net/p/gnuplot/gnuplot-main/ci/master/tree/Copyright'
   ], [
     'Go',
     'Google, Inc.',
@@ -308,7 +323,7 @@ credits = [
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
     'Godot',
-    '2014-2018 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
+    '2014-2019 Juan Linietsky, Ariel Manzur, Godot Engine contributors',
     'MIT',
     'https://raw.githubusercontent.com/godotengine/godot/master/LICENSE.txt'
   ], [
@@ -383,7 +398,7 @@ credits = [
     'https://raw.githubusercontent.com/jquery/api.jqueryui.com/master/LICENSE.txt'
   ], [
     'Julia',
-    '2009-2018 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
+    '2009-2019 Jeff Bezanson, Stefan Karpinski, Viral B. Shah, and other contributors',
     'MIT',
     'https://raw.githubusercontent.com/JuliaLang/julia/master/LICENSE.md'
   ], [
@@ -441,6 +456,11 @@ credits = [
     '2006-2016 L&Ouml;VE Development Team',
     'GFDL',
     'http://www.gnu.org/copyleft/fdl.html'
+  ], [
+    'MariaDB',
+    '2019 MariaDB',
+    'CC BY-SA & GFDL',
+    'https://mariadb.com/kb/en/library/documentation/+license/'
   ], [
     'Marionette.js',
     '2017 Muted Solutions, LLC',
@@ -513,9 +533,9 @@ credits = [
     'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
   ], [
     'Nokogiri',
-    '2008-2017 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori Musha, John Shahid',
+    '2008-2018 Aaron Patterson, Mike Dalessio, Charles Nutter, Sergio Arbeo, Patrick Mahoney, Yoko Harada, Akinori MUSHA, John Shahid, Lars Kanis',
     'MIT',
-    'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.txt'
+    'https://raw.githubusercontent.com/sparklemotion/nokogiri/master/LICENSE.md'
   ], [
     'npm',
     'npm, Inc. and Contributors<br>npm is a trademark of npm, Inc.',
@@ -523,8 +543,8 @@ credits = [
     'https://raw.githubusercontent.com/npm/npm/master/LICENSE'
   ], [
     'NumPy',
-    '2008-2017 NumPy Developers',
-    'NumPy',
+    '2005-2019 NumPy Developers',
+    'BSD',
     'https://raw.githubusercontent.com/numpy/numpy/master/LICENSE.txt'
   ], [
     'Octave',
@@ -588,7 +608,7 @@ credits = [
     'https://raw.githubusercontent.com/ponylang/ponyc/master/LICENSE'
   ], [
     'PostgreSQL',
-    '1996-2018 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
+    '1996-2019 The PostgreSQL Global Development Group<br>&copy; 1994 The Regents of the University of California',
     'PostgreSQL',
     'https://www.postgresql.org/about/licence/'
   ], [
@@ -603,7 +623,7 @@ credits = [
     'https://raw.githubusercontent.com/pygame/pygame/master/LICENSE'
   ], [
     'Python',
-    '2001-2018 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
+    '2001-2020 Python Software Foundation<br>Python is a trademark of the Python Software Foundation.',
     'PSFL',
     'https://docs.python.org/3/license.html'
   ], [
@@ -626,6 +646,11 @@ credits = [
     '2013-present Facebook Inc.',
     'MIT',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE'
+  ], [
+    'ReactiveX',
+    'ReactiveX contributors',
+    'Apache',
+    'https://raw.githubusercontent.com/ReactiveX/reactivex.github.io/develop/LICENSE'
   ], [
     'Redis',
     '2009-2018 Salvatore Sanfilippo',
@@ -653,14 +678,14 @@ credits = [
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
     'Ruby on Rails',
-    '2004-2017 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
+    '2004-2019 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
     'https://raw.githubusercontent.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
     'Rust',
     '2010 The Rust Project Developers',
     'MIT',
-    'https://raw.githubusercontent.com/rust-lang/rust/master/LICENSE-MIT'
+    'https://raw.githubusercontent.com/rust-lang/book/master/LICENSE-MIT'
   ], [
     'RxJS',
     '2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors',
@@ -697,6 +722,11 @@ credits = [
     'BSD',
     'https://raw.githubusercontent.com/sinonjs/sinon/master/LICENSE'
   ], [
+    'Sequelize',
+    '2014—present Sequelize contributors',
+    'MIT',
+    'https://raw.githubusercontent.com/sequelize/sequelize/master/LICENSE'
+  ], [
     'Socket.io',
     '2014-2015 Automattic',
     'MIT',
@@ -723,7 +753,7 @@ credits = [
     'http://tcl.tk/software/tcltk/license.html'
   ], [
     'TensorFlow',
-    '2018 The TensorFlow Authors',
+    '2019 The TensorFlow Authors',
     'CC BY',
     'https://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -743,7 +773,7 @@ credits = [
     'https://twig.symfony.com/license'
   ], [
     'TypeScript',
-    'Microsoft and other contributors',
+    '2012-2019 Microsoft',
     'Apache',
     'https://raw.githubusercontent.com/Microsoft/TypeScript-Handbook/master/LICENSE'
   ], [

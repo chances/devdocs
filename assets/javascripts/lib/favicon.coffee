@@ -28,12 +28,19 @@ withImage = (url, action) ->
     currentSlug = doc.slug
     return
 
-  styles = window.getComputedStyle($("._icon-#{doc.slug.split('~')[0]}"), ':before')
+  iconEl = $("._icon-#{doc.slug.split('~')[0]}")
+  return if iconEl == null
+
+  styles = window.getComputedStyle(iconEl, ':before')
+
+  backgroundPositionX = styles['background-position-x']
+  backgroundPositionY = styles['background-position-y']
+  return if backgroundPositionX == undefined || backgroundPositionY == undefined
 
   bgUrl = app.config.favicon_spritesheet
   sourceSize = 16
-  sourceX = Math.abs(parseInt(styles['background-position-x'].slice(0, -2)))
-  sourceY = Math.abs(parseInt(styles['background-position-y'].slice(0, -2)))
+  sourceX = Math.abs(parseInt(backgroundPositionX.slice(0, -2)))
+  sourceY = Math.abs(parseInt(backgroundPositionY.slice(0, -2)))
 
   withImage(bgUrl, (docImg) ->
     withImage(defaultUrl, (defaultImg) ->
@@ -49,12 +56,17 @@ withImage = (url, action) ->
       docIconPercentage = 65
       destinationCoords = size / 100 * (100 - docIconPercentage)
       destinationSize = size / 100 * docIconPercentage
+
       ctx.drawImage(docImg, sourceX, sourceY, sourceSize, sourceSize, destinationCoords, destinationCoords, destinationSize, destinationSize)
 
-      urlCache[doc.slug] = canvas.toDataURL()
-      favicon.href = urlCache[doc.slug]
+      try
+        urlCache[doc.slug] = canvas.toDataURL()
+        favicon.href = urlCache[doc.slug]
 
-      currentSlug = doc.slug
+        currentSlug = doc.slug
+      catch error
+        Raven.captureException error, { level: 'info' }
+        @resetFavicon()
     )
   )
 

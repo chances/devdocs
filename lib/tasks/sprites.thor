@@ -7,11 +7,14 @@ class SpritesCLI < Thor
     require 'docs'
     require 'chunky_png'
     require 'fileutils'
+    require 'image_optim'
+    require 'terminal-table'
     super
   end
 
-  desc 'generate [--remove-public-icons] [--verbose]', 'Generate the documentation icon spritesheets'
+  desc 'generate [--remove-public-icons] [--disable-optimization] [--verbose]', 'Generate the documentation icon spritesheets'
   option :remove_public_icons, type: :boolean, desc: 'Remove public/icons after generating the spritesheets'
+  option :disable_optimization, type: :boolean, desc: 'Disable optimizing the spritesheets with OptiPNG'
   option :verbose, type: :boolean
   def generate
     items = get_items
@@ -33,10 +36,15 @@ class SpritesCLI < Thor
 
     return unless items_with_icons.length > 0
 
-    log_details(items_with_icons, icons_per_row)
+    log_details(items_with_icons, icons_per_row) if options[:verbose]
 
-    generate_spritesheet(16, items_with_icons, 'assets/images/sprites/docs.png') {|item| item[:icon_16]}
-    generate_spritesheet(32, items_with_icons, 'assets/images/sprites/docs@2x.png') {|item| item[:icon_32]}
+    generate_spritesheet(16, items_with_icons) {|item| item[:icon_16]}
+    generate_spritesheet(32, items_with_icons) {|item| item[:icon_32]}
+
+    unless options[:disable_optimization]
+      optimize_spritesheet(get_output_path(16))
+      optimize_spritesheet(get_output_path(32))
+    end
 
     # Add Mongoose's icon details to docs without custom icons
     default_item = items_with_icons.find {|item| item[:type] == 'mongoose'}
@@ -109,7 +117,7 @@ class SpritesCLI < Thor
     end
 
     avg = contrast.reduce(:+) / contrast.size.to_f
-    avg < 3.5
+    avg < 2.5
   end
 
   def get_contrast(base, other)
@@ -133,14 +141,16 @@ class SpritesCLI < Thor
 
     rgb.map! do |value|
       value /= 255
-      value < 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+      value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
     end
 
     0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]
   end
 
-  def generate_spritesheet(size, items_with_icons, output_path, &item_to_icon)
-    logger.info("Generating spritesheet #{output_path} with icons of size #{size} x #{size}")
+  def generate_spritesheet(size, items_with_icons, &item_to_icon)
+    output_path = get_output_path(size)
+
+    logger.info("Generating spritesheet to #{output_path} with icons of size #{size} x #{size}")
 
     icons_per_row = Math.sqrt(items_with_icons.length).ceil
     spritesheet = ChunkyPNG::Image.new(size * icons_per_row, size * icons_per_row)
@@ -161,6 +171,11 @@ class SpritesCLI < Thor
 
     FileUtils.mkdir_p(File.dirname(output_path))
     spritesheet.save(output_path)
+  end
+
+  def optimize_spritesheet(path)
+    logger.info("Optimizing spritesheet at #{path}")
+    image_optim.optimize_image!(path)
   end
 
   def save_manifest(items, icons_per_row, path)
@@ -186,22 +201,35 @@ class SpritesCLI < Thor
   end
 
   def log_details(items_with_icons, icons_per_row)
-    logger.debug("Amount of icons: #{items_with_icons.length}")
-    logger.debug("Amount of icons needing the dark icon fix: #{items_with_icons.count {|item| item[:dark_icon_fix]}}")
-    logger.debug("Amount of icons per row: #{icons_per_row}")
+    title = "#{items_with_icons.length} items with icons (#{icons_per_row} per row)"
+    headings = ['Type', 'Row', 'Column', "Dark icon fix (#{items_with_icons.count {|item| item[:dark_icon_fix]}})"]
+    rows = items_with_icons.map {|item| [item[:type], item[:row], item[:col], item[:dark_icon_fix] ? 'Yes' : 'No']}
 
-    max_type_length = items_with_icons.map {|item| item[:type].length}.max
-    border = "+#{'-' * (max_type_length + 2)}+#{'-' * 5}+#{'-' * 8}+#{'-' * 15}+"
+    table = Terminal::Table.new :title => title, :headings => headings, :rows => rows
+    puts table
+  end
 
-    logger.debug(border)
-    logger.debug("| #{'Type'.ljust(max_type_length)} | Row | Column | Dark icon fix |")
-    logger.debug(border)
+  def get_output_path(size)
+    "assets/images/sprites/docs#{size == 32 ? '@2x' : ''}.png"
+  end
 
-    items_with_icons.each do |item|
-      logger.debug("| #{item[:type].ljust(max_type_length)} | #{item[:row].to_s.ljust(3)} | #{item[:col].to_s.ljust(6)} | #{(item[:dark_icon_fix] ? 'Yes' : 'No').ljust(13)} |")
-    end
-
-    logger.debug(border)
+  def image_optim
+    @image_optim ||= ImageOptim.new(
+      :config_paths => [],
+      :advpng => false,
+      :gifsicle => false,
+      :jhead => false,
+      :jpegoptim => false,
+      :jpegrecompress => false,
+      :jpegtran => false,
+      :pngcrush => false,
+      :pngout => false,
+      :pngquant => false,
+      :svgo => false,
+      :optipng => {
+        :level => 7,
+      },
+    )
   end
 
   def logger
